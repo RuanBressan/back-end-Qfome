@@ -36,8 +36,6 @@ public class FornecedorEntity implements Serializable {
     @Column(nullable = false)
     private String nuCnpj;
 
-    private LocalDate dtNascimento;
-
     private String dsTelefone;
 
     private Double nuLatitude;

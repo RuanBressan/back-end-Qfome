@@ -1,7 +1,9 @@
 package com.delivery.delivery.dto.auth;
 
+import com.delivery.delivery.entity.enums.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -12,4 +14,7 @@ public class AuthRequest {
 
     @NotBlank(message = "A senha é obrigatória")
     private String dsSenha;
+
+    @NotNull(message = "Tipo do usuário é obrigatório")
+    private TipoUsuario flTipoUsuario;
 }

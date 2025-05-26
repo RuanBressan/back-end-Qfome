@@ -5,7 +5,7 @@ import com.delivery.delivery.dto.auth.AuthRequest;
 import com.delivery.delivery.dto.auth.AuthResponse;
 import com.delivery.delivery.entity.FornecedorEntity;
 import com.delivery.delivery.entity.enums.TipoUsuario;
-import com.delivery.delivery.security.AppDetalhesFornecedorService;
+import com.delivery.delivery.security.AppDetalhesUsuarioUnificadoService;
 import com.delivery.delivery.security.JwtUtil;
 import com.delivery.delivery.service.FornecedorService;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class AuthFornecedorController {
 
     private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
-    private final AppDetalhesFornecedorService appDetalhesFornecedorService;
+    private final AppDetalhesUsuarioUnificadoService appDetalhesUsuarioUnificadoService;
     private final FornecedorService fornecedorService;
 
     @PostMapping("/login")
@@ -34,7 +34,9 @@ public class AuthFornecedorController {
 
         authManager.authenticate(authInputToken);
 
-        UserDetails user = appDetalhesFornecedorService.loadUserByUsername(request.getDsEmail());
+        UserDetails user = appDetalhesUsuarioUnificadoService.loadUserByTipo(
+                request.getDsEmail(), TipoUsuario.FORNECEDOR
+        );
         String token = jwtUtil.generateToken(user.getUsername());
 
         return new AuthResponse(token);
@@ -42,13 +44,12 @@ public class AuthFornecedorController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public AuthResponse register(@Valid @RequestBody AuthFornecedorRegister request) {
+public AuthResponse register(@Valid @RequestBody AuthFornecedorRegister request) {
         FornecedorEntity fornecedor = new FornecedorEntity();
         fornecedor.setNmUsuario(request.getNmUsuario());
         fornecedor.setDsEmail(request.getDsEmail());
         fornecedor.setDsSenha(request.getDsSenha());
         fornecedor.setNuCnpj(request.getNuCnpj());
-        fornecedor.setDtNascimento(request.getDtNascimento());
         fornecedor.setDsTelefone(request.getDsTelefone());
         fornecedor.setNuLatitude(request.getNuLatitude());
         fornecedor.setNuLongitude(request.getNuLongitude());

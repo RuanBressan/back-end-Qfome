@@ -5,7 +5,7 @@ import com.delivery.delivery.dto.auth.AuthRequest;
 import com.delivery.delivery.dto.auth.AuthResponse;
 import com.delivery.delivery.entity.EntregadorEntity;
 import com.delivery.delivery.entity.enums.TipoUsuario;
-import com.delivery.delivery.security.AppDetalhesEntregadorService;
+import com.delivery.delivery.security.AppDetalhesUsuarioUnificadoService;
 import com.delivery.delivery.security.JwtUtil;
 import com.delivery.delivery.service.EntregadorService;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class AuthEntregadorController {
 
     private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
-    private final AppDetalhesEntregadorService appDetalhesEntregadorService;
+    private final AppDetalhesUsuarioUnificadoService appDetalhesUsuarioUnificadoService;
     private final EntregadorService entregadorService;
 
     @PostMapping("/login")
@@ -34,7 +34,9 @@ public class AuthEntregadorController {
 
         authManager.authenticate(authInputToken);
 
-        UserDetails user = appDetalhesEntregadorService.loadUserByUsername(request.getDsEmail());
+        UserDetails user = appDetalhesUsuarioUnificadoService.loadUserByTipo(
+                request.getDsEmail(), TipoUsuario.ENTREGADOR
+        );
         String token = jwtUtil.generateToken(user.getUsername());
 
         return new AuthResponse(token);
@@ -61,5 +63,4 @@ public class AuthEntregadorController {
 
         return new AuthResponse(token);
     }
-
 }

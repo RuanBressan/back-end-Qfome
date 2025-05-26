@@ -24,8 +24,6 @@ public class AuthFornecedorRegister {
     @CNPJ(message = "CNPJ inválido")
     private String nuCnpj;
 
-    private LocalDate dtNascimento;
-
     private String dsTelefone;
 
     private Double nuLatitude;
