@@ -16,6 +16,6 @@ public class ProdutoAtualizacaoRequest {
 
     @NotNull(message = "Preço é obrigatório")
     @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
-    private Double vlPreco;
+    private BigDecimal vlPreco;
 
 }

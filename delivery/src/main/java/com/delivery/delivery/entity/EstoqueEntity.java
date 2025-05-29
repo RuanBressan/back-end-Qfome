@@ -17,7 +17,7 @@ public class EstoqueEntity {
     private Integer id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "produto_id", nullable = false, unique = true)
+    @JoinColumn(name = "idProduto", nullable = false, unique = true)
     private ProdutoEntity produto;
 
     @Column(nullable = false)

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -25,7 +27,7 @@ public class ProdutoEntity {
     private String dsProduto;
 
     @Column(nullable = false)
-    private Double vlPreco;
+    private BigDecimal vlPreco;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fornecedor_id", nullable = false)

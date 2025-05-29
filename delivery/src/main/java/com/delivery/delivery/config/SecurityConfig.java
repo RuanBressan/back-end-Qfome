@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,7 +32,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { // Parâmetro corrigido
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -48,10 +48,13 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pedidos").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/pedidos/cliente/**").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/pedidos/fornecedor/**").hasRole("FORNECEDOR")
+                        .requestMatchers(HttpMethod.PATCH, "/pedidos/**/status").hasRole("FORNECEDOR")
                         .requestMatchers("/cliente/**").hasRole("CLIENTE")
                         .requestMatchers("/fornecedor/**").hasRole("FORNECEDOR")
                         .requestMatchers("/entregador/**").hasRole("ENTREGADOR")
-                        .requestMatchers(HttpMethod.POST, "/categorias/**").hasRole("FORNECEDOR")
                         .requestMatchers(HttpMethod.POST, "/produtos/**").hasRole("FORNECEDOR")
                         .anyRequest().authenticated()
                 )
@@ -78,15 +81,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // Método corrigido para AuthenticationManager
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-
-        authenticationManagerBuilder
-                .userDetailsService(appDetalhesUsuarioUnificadoService)
-                .passwordEncoder(passwordEncoder());
-
-        return authenticationManagerBuilder.build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 }

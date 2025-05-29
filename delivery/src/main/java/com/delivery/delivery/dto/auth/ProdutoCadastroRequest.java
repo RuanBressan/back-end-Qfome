@@ -4,6 +4,8 @@ import com.delivery.delivery.entity.enums.Categoria;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ProdutoCadastroRequest {
 
@@ -16,7 +18,7 @@ public class ProdutoCadastroRequest {
 
     @NotNull(message = "Preço obrigatório")
     @DecimalMin(value = "0.01", message = "Preço inválido")
-    private Double vlPreco;
+    private BigDecimal vlPreco;
 
     private Categoria categoria;
 }
