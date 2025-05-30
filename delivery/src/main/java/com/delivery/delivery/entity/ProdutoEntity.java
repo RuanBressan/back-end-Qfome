@@ -29,6 +29,8 @@ public class ProdutoEntity {
     @Column(nullable = false)
     private BigDecimal vlPreco;
 
+    private String dsAvatar;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fornecedor_id", nullable = false)
     private FornecedorEntity fornecedor;

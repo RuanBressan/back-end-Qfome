@@ -11,6 +11,7 @@ public class ProdutoResponse {
     private String nmProduto;
     private String dsProduto;
     private BigDecimal vlPreco;
+    private String dsAvatar;
     private Boolean flAtivo;
     private LocalDateTime dtCriacao;
     private LocalDateTime dtAtualizacao;

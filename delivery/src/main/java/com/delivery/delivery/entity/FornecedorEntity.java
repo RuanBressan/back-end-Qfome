@@ -36,6 +36,8 @@ public class FornecedorEntity implements Serializable {
     @Column(nullable = false)
     private String nuCnpj;
 
+    private String dsAvatar;
+
     private String dsTelefone;
 
     private Double nuLatitude;

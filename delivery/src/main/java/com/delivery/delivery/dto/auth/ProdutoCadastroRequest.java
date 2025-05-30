@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 @Data
 public class ProdutoCadastroRequest {
 
+    private String dsAvatar;
+
     @NotBlank(message = "Nome obrigatório")
     @Size(max = 100, message = "Máximo 100 caracteres")
     private String nmProduto;

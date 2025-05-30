@@ -17,6 +17,7 @@ public class FornecedorDto {
     private String dsEmail;
     private TipoUsuario flTipoUsuario;
     private String nuCnpj;
+    private String dsAvatar;
     private LocalDate dtNascimento;
     private String dsTelefone;
     private Double nuLatitude;

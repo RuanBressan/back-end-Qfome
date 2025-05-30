@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 @Data
 public class ProdutoAtualizacaoRequest {
 
+    private String dsAvatar;
+
     @NotBlank(message = "Nome do produto é obrigatório")
     @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres")
     private String nmProduto;
@@ -17,5 +19,6 @@ public class ProdutoAtualizacaoRequest {
     @NotNull(message = "Preço é obrigatório")
     @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     private BigDecimal vlPreco;
+
 
 }
